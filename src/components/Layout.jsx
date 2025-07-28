@@ -20,6 +20,7 @@ const Layout = ({ children }) => {
         <a target="_blank" href="https://github.com/SakthiBala3107/">
           Red
         </a>{" "}
+        <br />
         using the{" "}
         <a target="_blank" href="https://www.fantacss.smoljames.com/">
           Fanta css
