@@ -9,7 +9,7 @@ import History from "./components/History";
 // import './App.css'
 
 function App() {
-  const isAuthenticated = false;
+  const isAuthenticated = true;
 
   const authenticatedContent = (
     <>
