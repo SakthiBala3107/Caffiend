@@ -28,7 +28,7 @@ const History = () => {
               [utcTime]: coffee,
             });
 
-            const summary = `${coffee.name} | ${timeSinceConsume} | $${coffee.cost} | ${remainingAmount}mg / ${originalAmount}mg `;
+            const summary = `${coffee.name} | ${timeSinceConsume} | $g${coffee.cost} | ${remainingAmount}mg / ${originalAmount}mg `;
             //
             // const eachTitle = coffeeConsumptionHistory[utcTime].name;
             return (
