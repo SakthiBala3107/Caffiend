@@ -1,23 +1,42 @@
 import React, { useState } from "react";
 import { coffeeOptions } from "../utills";
+import Modal from "./Modal";
+import Authentication from "./Authentication";
 
-const CoffeeForm = () => {
+const CoffeeForm = ({ isAuthenticated }) => {
   const [selectedCoffee, setSelectedCoffee] = useState(null); // displays  (first 6) coffees
   const [showCoffeeTypes, setShowCoffeeTypes] = useState(false); // for other coffee-types
   const [cost, setCost] = useState(0); //cost
   const [hour, setHour] = useState(0); //hour
   const [minutes, setMinutes] = useState(0); //minutes
+  const [showModal, setShowModal] = useState(false); //minutes
 
-
-// FUNTIONS
-const handleSubmit =()=>{
-  console.log(selectedCoffee, showCoffeeTypes, cost, hour, minutes)
-}
-
+  // FUNTIONS
+  const handleSubmit = () => {
+    if (!isAuthenticated) {
+      setShowModal(true);
+    }
+    console.log(selectedCoffee, showCoffeeTypes, cost, hour, minutes);
+  };
 
   //RENDERING STUFFS//
   return (
     <>
+      {showModal && (
+        <Modal
+          handleCloseModal={() => {
+            setShowModal(false);
+          }}
+        >
+          <Authentication
+            handleCloseModal={() => {
+              setShowModal(false);
+            }}
+          />
+        </Modal>
+      )}
+
+      {/* actual-thing */}
       <div className="section-header">
         <i className="fa-solid fa-pencil" />
         <h2>Start Tracking Today</h2>
@@ -28,7 +47,7 @@ const handleSubmit =()=>{
       <div className="coffee-grid">
         {coffeeOptions.slice(0, 5).map((option, idx) => (
           <button
-          key={idx}
+            key={idx}
             className={
               "button-card " +
               (option.name === selectedCoffee ? "coffee-button-selected" : "")
@@ -51,6 +70,7 @@ const handleSubmit =()=>{
           onClick={() => {
             setShowCoffeeTypes(!showCoffeeTypes);
             setSelectedCoffee(null);
+            // setShowModal(true);
           }}
         >
           <h4>Other</h4>

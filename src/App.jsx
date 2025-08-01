@@ -22,7 +22,7 @@ function App() {
     <>
       <Layout>
         <Hero />
-        <CoffeeForm />
+        <CoffeeForm isAuthenticated={isAuthenticated} />
         {isAuthenticated && authenticatedContent}
       </Layout>
     </>

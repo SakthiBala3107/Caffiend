@@ -1,9 +1,17 @@
-import React from 'react'
+import { Children } from "react";
+import ReactDom from "react-dom";
+const Modal = ({ children, handleCloseModal }) => {
 
-const Modal = () => {
-  return (
-    <div>Modal</div>
-  )
-}
+  return ReactDom.createPortal(
 
-export default Modal
+
+    <div className="modal-container">
+      <button className="modal-underlay" onClick={handleCloseModal} />
+
+      <div className="modal-content">{children}</div>
+    </div>,
+    document.getElementById("portal")
+  );
+};
+
+export default Modal;

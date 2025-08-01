@@ -6,7 +6,6 @@ import {
   statusLevels,
 } from "../utills";
 
-
 // SECONDARY COMPINENT FOR REUSABLITY
 function StatCard({ lg, title, children }) {
   return (
@@ -64,6 +63,7 @@ const Stats = () => {
             <span className="stat-text">{stats.daily_caffiene}</span> mg
           </p>
         </StatCard>
+
         <StatCard title="Avg # of Coffees">
           <p>
             <span className="stat-text">{stats.average_coffees}</span>
@@ -95,7 +95,7 @@ const Stats = () => {
         </thead>
         <tbody>
           {getTopThreeCoffees(coffeeConsumptionHistory).map((coffee, idx) => (
-            <tr>
+            <tr key={idx}>
               <td>{coffee.coffeeName}</td>
               <td>{coffee.count}</td>
               <td>{coffee.percentage}</td>
