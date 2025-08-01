@@ -1,13 +1,14 @@
 import React from "react";
 import {
-  coffeeConsumptionHistory,
   timeSinceConsumption,
   // getCaffeine,
   calculateCurrentCaffeineLevel,
   getCaffeineAmount,
 } from "../utills";
+import { useAuth } from "../context/AuthContext";
 
 const History = () => {
+  const { globalData } = useAuth();
   return (
     <>
       <div className="section-header">
@@ -18,10 +19,10 @@ const History = () => {
         <i>Hover for More Information</i>
       </p>
       <div className="coffee-history">
-        {Object.keys(coffeeConsumptionHistory)
+        {Object.keys(globalData)
           .sort((a, b) => b - a)
           .map((utcTime, idx) => {
-            const coffee = coffeeConsumptionHistory[utcTime];
+            const coffee = globalData[utcTime];
             const timeSinceConsume = timeSinceConsumption(utcTime);
             const originalAmount = getCaffeineAmount(coffee.name);
             const remainingAmount = calculateCurrentCaffeineLevel({
@@ -30,7 +31,7 @@ const History = () => {
 
             const summary = `${coffee.name} | ${timeSinceConsume} | $g${coffee.cost} | ${remainingAmount}mg / ${originalAmount}mg `;
             //
-            // const eachTitle = coffeeConsumptionHistory[utcTime].name;
+            // const eachTitle = globalData[utcTime].name;
             return (
               <div key={idx} title={summary}>
                 <i className="fa-solid fa-mug-hot" />

@@ -8,7 +8,7 @@ export default function Authentication({handleCloseModal}) {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [error, setError] = useState(null);
 
-  const { signIn, login } = useAuth();
+  const { signup, login } = useAuth();
 
   async function handleAuthenticate() {
     if (
@@ -26,7 +26,7 @@ export default function Authentication({handleCloseModal}) {
 
       if (isRegistration) {
         // register a user
-        await signIn(email, password);
+        await signup(email, password);
       } else {
         // login a user
         await login(email, password);

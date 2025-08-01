@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { coffeeOptions } from "../utills";
 import Modal from "./Modal";
 import Authentication from "./Authentication";
+import { useAuth } from "../context/AuthContext";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 const CoffeeForm = ({ isAuthenticated }) => {
   const [selectedCoffee, setSelectedCoffee] = useState(null); // displays  (first 6) coffees
@@ -11,12 +14,54 @@ const CoffeeForm = ({ isAuthenticated }) => {
   const [minutes, setMinutes] = useState(0); //minutes
   const [showModal, setShowModal] = useState(false); //minutes
 
+  const { globalData, setGlobalData, globalUser } = useAuth();
+
   // FUNTIONS
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!isAuthenticated) {
       setShowModal(true);
     }
-    console.log(selectedCoffee, showCoffeeTypes, cost, hour, minutes);
+
+    //GUARD-CLAUSE if the user not  filled the form and trey to add entry
+    if (!selectedCoffee) {
+      return;
+    }
+
+    try {
+      const nowTime = Date.now();
+      const timeToSubstract = hour * 60 * 60 * 1000 + minutes * 60 * 100;
+      const timeStamp = nowTime - timeToSubstract;
+
+      const newData = { name: selectedCoffee, cost: cost };
+
+      // create a new data object
+      const newGlobalData = {
+        ...(globalData || {}),
+      };
+
+      newGlobalData[timeStamp] = newData;
+      // newGlobalData[timeStamp] = { name: selectedCoffee, cost: cost };
+
+      console.log(timeStamp, selectedCoffee, cost);
+      setGlobalData(newGlobalData);
+
+      const userRef = doc(db, "users", globalUser.uid);
+
+      const res = await setDoc(
+        userRef,
+        {
+          [timeStamp]: newData,
+        },
+        { merge: true }
+      );
+      setSelectedCoffee(null);
+      setCost(0);
+      setHour(0);
+      setMinutes(0);
+    } catch (e) {
+      console.log(e.message);
+    } finally {
+    }
   };
 
   //RENDERING STUFFS//

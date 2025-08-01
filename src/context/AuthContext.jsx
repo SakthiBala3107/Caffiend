@@ -6,7 +6,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { useState, useEffect, useContext, createContext } from "react";
-import { auth, db } from "../firbase";
+import { auth, db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 
 const AuthContext = createContext();
@@ -51,7 +51,7 @@ export function AuthProvider(props) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      console.log("CURRENT USER: ", user);
+      // console.log("CURRENT USER: ", user);
       setGlobalUser(user);
       // if there's no user, empty the user state and return from this listener
       if (!user) {
